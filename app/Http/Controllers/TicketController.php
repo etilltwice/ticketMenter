@@ -8,11 +8,39 @@ use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
-    public function payList(Request $request)
+    /**
+     * チケットの作成
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function create(Request $request)
     {
-        $result = DB::table('tickets')->where('student_id', $request->user_id)->get();
+        DB::table('tickets')->insert([
+            "menter_id" => $request->menter_id,
+            "student_id" => $request->student_id,
+            "content" => $request->content,
+            "created_at" => now(),
+            "updated_at" => now(),
+        ]);
+        return "succese";
+    }
 
-        return new TicketPayListCollection($result);
-        // return $result[0]->menter_id;
+    /**
+     * チケットの論理削除
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {
+        DB::table('tickets')
+            ->where('ticket_id', $request->ticket_id)
+            ->update([
+                "status" => false,
+                "updated_at" => now(),
+            ]);
+
+        return "succese";
     }
 }

@@ -18,7 +18,7 @@ class TicketCreateTable extends Migration
             $table->mediumInteger('menter_id');
             $table->mediumInteger('student_id');
             $table->String('content');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->Timestamps();
         });
     }

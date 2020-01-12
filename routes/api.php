@@ -16,8 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//ユーザ系
-Route::post('/user/userName', 'UserController@userName');
+Route::middleware(['cors'])->group(function () {
+    //ユーザ系
+    Route::get('/user/userName', 'UserController@userName');
+    Route::Post('/user/userPage', 'UserController@userPage');
 
-//チケット系
-Route::post('/ticket/payList', 'TicketController@payList');
+    //チケット系
+    Route::post('/ticket/create', 'TicketController@create');
+    Route::post('/ticket/delete', 'TicketController@delete');
+});
